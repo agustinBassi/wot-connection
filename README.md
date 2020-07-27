@@ -4,10 +4,6 @@
 
 Author: Agustin Bassi - 2020
 
-# TODO:
-
-* Rename folders to entities WoT like thing, client, gateway, etc.
-
 ## 
 ## Table of Contents
 
@@ -23,9 +19,9 @@ Author: Agustin Bassi - 2020
 ## 
 ## Platform Description
 
-The goal of this project is to create an open source MQTT Platform to be used as a part of an IoT system, based on MQTT protocol.
+The goal of this project is to create an open source Web of Things (WoT) Platform to be used as a part of an IoT system, based on WoT protocol.
 
-The platform consists in several modules described below (All of them are well described in the [Project Wiki](https://github.com/agustinBassi/mq-connection/wiki)).
+The platform consists in several modules described below (All of them are well described in the [Project Wiki](https://github.com/agustinBassi/wot-connection/wiki)).
 
 * **MQTT Broker**: Raspberry Pi that runs a MQTT Broker to interact with the HTTP client via WebSockets and to MQTT clients via MQTT protocol. Besides, has a HTTP server in order to serve the page of the HTTP Client.
 * **MQTT Client Web**: A Single Page Application (SPA) that communicates with MQTT Broker via Websockets. It can send and receive MQTT topics and perform many actions. The code used for MQTT connection is based on [this project](https://github.com/jpmens/simple-mqtt-websocket-example).
