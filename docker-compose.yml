@@ -1,0 +1,63 @@
+############################################################################### 
+# Author: Agustin Bassi 
+# Date: July 2020 
+# Copyright: Agustin Bassi
+# Project: WoT connection
+# TODO: Check how to pass: [--log-opt max-size=1m] and [--log-opt max-file=10] 
+# service specific settings
+###############################################################################
+  
+version: '3'
+
+services:
+
+  webthings-gateway:
+    # service header
+    image:            mozillaiot/gateway:latest
+    hostname:         webthings-gateway
+    container_name:   webthings-gateway
+    # project labels 
+    labels: 
+      project:        "WoT Connection" 
+      day:            "Jul 2020" 
+      mantainer:      Agustin Bassi
+    # service specific settings
+    environment:
+      TZ:             America/Argentina/Buenos_Aires
+    volumes:
+      -               ./mozilla-webthings-gateway/data:/home/node/.mozilla-iot
+    network_mode:     host
+
+  http-client:
+    # service header
+    image:            httpd:2.4
+    hostname:         http-client
+    container_name:   http-client
+    # project labels 
+    labels: 
+      project:        "WoT Connection" 
+      day:            "Jul 2020" 
+      mantainer:      Agustin Bassi
+    # service specific settings
+    volumes:
+        -             ./http-client:/usr/local/apache2/htdocs/
+    ports:
+      -               "5001:80"    
+  wot-thing-python:
+     # service header
+    build:
+      context:        ./wot-thing-python
+      dockerfile:     Dockerfile
+    hostname:         wot-thing-python
+    container_name:   wot-thing-python
+    # project labels 
+    labels: 
+      project:        "WoT Connection" 
+      day:            "Jul 2020" 
+      mantainer:      Agustin Bassi
+    # service specific settings
+    volumes:
+      -               ./wot-thing-python/src:/app/src
+    ports:
+      -               "8888:8888"
+    command:          python /app/src/light-sensor-fake.py
