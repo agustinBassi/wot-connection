@@ -1,0 +1,57 @@
+############################################################################### 
+# Author: Agustin Bassi 
+# Date: July 2020 
+# Copyright: Agustin Bassi
+# Project: WoT connection
+###############################################################################
+  
+version: '3'
+
+services:
+
+  webthings-gateway:
+    # service header
+    image:          mozillaiot/gateway:latest
+    hostname:       webthings-gateway
+    container_name: webthings-gateway
+    # TODO: Check how to pass: [--log-opt max-size=1m] and [--log-opt max-file=10] 
+    # service specific settings
+    environment:
+      TZ:           America/Argentina/Buenos_Aires
+    volumes:
+      -             ./mozilla-webthings-gateway/data:/home/node/.mozilla-iot
+    network_mode:   host
+
+  http-client:
+    # service header
+    image:                  httpd:2.4
+    hostname:               http-client
+    container_name:         http-client
+    # project labels 
+    labels: 
+      project:              "WoT Connection" 
+      day:                  "Jul 2020" 
+      mantainer:            Agustin Bassi
+    # service specific settings
+    volumes:
+        -                   ./http-client:/usr/local/apache2/htdocs/
+    links:
+        -                   webthings-gateway
+    ports:
+      -                     "5001:80"    
+  # webthing-light-fake:
+  #   build:                  .
+  #   hostname:               api
+  #   container_name:         api
+  #   restart:                always
+  #   environment:
+  #     FLASK_ENV:            development
+  #     DATABASE_URL:         postgresql://bkr-user:bkr-pass@db:5432/bkr-db
+  #     JWT_SECRET_KEY:       v3rys3cr3tk3y
+  #     PORT:                 5000
+  #   networks:
+  #     -                     net-bkr-api
+  #   depends_on:
+  #     -                     db
+  #   ports:
+  #     -                     "5000:5000"
