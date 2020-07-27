@@ -1,0 +1,23 @@
+############################################################################### 
+# Author: Agustin Bassi 
+# Date: July 2020 
+# Copyright: Agustin Bassi
+# Project: WoT connection
+###############################################################################
+  
+version: '3'
+
+services:
+
+  webthings-gateway:
+    # service header
+    image:          mozillaiot/gateway:latest
+    hostname:       webthings-gateway
+    container_name: webthings-gateway
+    # TODO: Check how to pass: [--log-opt max-size=1m] and [--log-opt max-file=10] 
+    # service specific settings
+    environment:
+      TZ:           America/Argentina/Buenos_Aires
+    volumes:
+      -             ./data:/home/node/.mozilla-iot
+    network_mode:   host
