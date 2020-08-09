@@ -24,8 +24,8 @@
 /*==================[internal data declaration]==============================*/
 
 // WiFi settings
-const char* WIFI_SSID = "Fibertel WiFi152 2.4GHz";
-const char* WIFI_PASS = "0043510112";
+const char* WIFI_SSID = "WIFI_SSID";
+const char* WIFI_PASS = "WIFI_PASS";
 // Webthings objects
 WebThingAdapter* WebthingAdapter;
 // Available LED types for thing
@@ -104,7 +104,7 @@ void setup(void){
     // create the things that will be exposed
     WebThing_CreateThings();
     // put led in a known state
-    digitalWrite(LED_ONBOARD, LOW);
+    digitalWrite(LED_ONBOARD, true);
 }
 
 void loop(void){
@@ -115,7 +115,7 @@ void loop(void){
     // save the state of device
     bool state = LedOnProperty.getValue().boolean;
     // write the LED with state received (active low led)
-    digitalWrite(LED_ONBOARD, state ? LOW : HIGH);
+    digitalWrite(LED_ONBOARD, state ? HIGH : LOW);
     // inform the state change
     if (state != lastState) {
         Serial.print("Changing state of thing '");
