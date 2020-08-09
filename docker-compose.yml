@@ -58,6 +58,5 @@ services:
     # service specific settings
     volumes:
       -               ./wot-thing-python/src:/app/src
-    ports:
-      -               "8888:8888"
+    network_mode:     host
     command:          python /app/src/light-sensor-fake.py
